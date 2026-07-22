@@ -63,11 +63,22 @@ function spawnCoin() {
 
     const coin = document.createElement("div");
 
-    // 10% の確率で偽物
-    const isFake = Math.random() < 0.1;
+    // レアコイン判定（1%）
+    const isRare = Math.random() < 0.01;
+
+    // 偽物コイン判定（10%）
+    const isFake = !isRare && Math.random() < 0.1;
+
+    // コインの色設定
+    if (isRare) {
+        coin.style.background = "linear-gradient(45deg, red, orange, yellow, green, cyan, blue, purple)";
+    } else if (isFake) {
+        coin.style.background = "orange";
+    } else {
+        coin.style.background = "gold";
+    }
 
     coin.classList.add("coin");
-    coin.style.background = isFake ? "orange" : "gold";
 
     const x = Math.random() * (window.innerWidth - 80);
     const y = Math.random() * (window.innerHeight - 200);
@@ -79,7 +90,11 @@ function spawnCoin() {
     coin.onclick = () => {
         if (!gameRunning) return;
 
-        if (isFake) {
+        if (isRare) {
+            score += 5; // レアコインは +5
+            soundCoin.currentTime = 0;
+            soundCoin.play();
+        } else if (isFake) {
             score -= 1;
             soundFake.currentTime = 0;
             soundFake.play();
