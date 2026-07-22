@@ -35,7 +35,6 @@ function endGame() {
     retryBtn.style.display = "inline-block";
     clearCoins();
 
-    // 時間切れの効果音
     soundEnd.currentTime = 0;
     soundEnd.play();
 }
@@ -47,12 +46,12 @@ function clearCoins() {
 function spawnCoin() {
     if (!gameRunning) return;
 
-    // 既存のコインを消す（常に1個だけにする）
+    // 常にコインは1個だけ
     clearCoins();
 
     const coin = document.createElement("div");
 
-    // 10% の確率で偽物（オレンジ）
+    // 10% の確率で偽物
     const isFake = Math.random() < 0.1;
 
     coin.classList.add("coin");
@@ -64,6 +63,7 @@ function spawnCoin() {
     coin.style.left = x + "px";
     coin.style.top = y + "px";
 
+    // コインをクリックしたとき
     coin.onclick = () => {
         if (!gameRunning) return;
 
@@ -83,8 +83,18 @@ function spawnCoin() {
     };
 
     gameArea.appendChild(coin);
+
+    // コインが時間経過で消える（1秒後）
+    setTimeout(() => {
+        if (!gameRunning) return;
+
+        // まだ画面に残っていたら消す
+        if (coin.parentNode) {
+            coin.remove();
+            spawnCoin(); // 新しいコインを1個だけ出す
+        }
+    }, 1000);
 }
 
 startBtn.onclick = startGame;
 retryBtn.onclick = startGame;
-
