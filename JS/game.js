@@ -47,6 +47,9 @@ function clearCoins() {
 function spawnCoin() {
     if (!gameRunning) return;
 
+    // 既存のコインを消す（常に1個だけにする）
+    clearCoins();
+
     const coin = document.createElement("div");
 
     // 10% の確率で偽物（オレンジ）
@@ -76,18 +79,12 @@ function spawnCoin() {
 
         scoreDisplay.textContent = "Score: " + score;
 
-        coin.remove();
-        spawnCoin();
+        spawnCoin(); // 次のコインを1個だけ出す
     };
 
     gameArea.appendChild(coin);
-
-    // 1秒ごとに新しいコインを出す
-    setTimeout(() => {
-        if (coin.parentNode) coin.remove();
-        spawnCoin();
-    }, 1000);
 }
 
 startBtn.onclick = startGame;
 retryBtn.onclick = startGame;
+
