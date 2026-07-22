@@ -1,0 +1,49 @@
+body {
+    background: #000;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    margin: 0;
+    overflow: hidden;
+}
+
+#score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    height: 40px;
+}
+
+#gameArea {
+    position: relative;
+    width: 100vw;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.coin {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#controls {
+    margin-top: 10px;
+}
+
+#retryBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    display: none;
+}
