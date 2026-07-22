@@ -10,6 +10,9 @@ const soundCoin = document.getElementById("soundCoin");
 const soundFake = document.getElementById("soundFake");
 const soundEnd = document.getElementById("soundEnd");
 
+// ハイスコア（ローカルストレージから読み込み）
+let highScore = Number(localStorage.getItem("highScore")) || 0;
+
 let score = 0;
 let timeLimit = 10;
 let timer;
@@ -31,7 +34,16 @@ function startGame() {
 
 function endGame() {
     gameRunning = false;
-    resultDisplay.textContent = `結果：${score} コイン`;
+
+    // ハイスコア更新チェック
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+    }
+
+    resultDisplay.textContent =
+        `結果：${score} コイン　｜　ハイスコア：${highScore}`;
+
     retryBtn.style.display = "inline-block";
     clearCoins();
 
@@ -88,7 +100,6 @@ function spawnCoin() {
     setTimeout(() => {
         if (!gameRunning) return;
 
-        // まだ画面に残っていたら消す
         if (coin.parentNode) {
             coin.remove();
             spawnCoin(); // 新しいコインを1個だけ出す
